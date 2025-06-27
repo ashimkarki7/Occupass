@@ -1,0 +1,28 @@
+@mixin centerFlexRowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin centerGridRowBetween {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+}
+
+@mixin centerFlexColumnBetween {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin useFlex {
+  display: flex;
+  width: 100%;
+}
+
+@mixin headerFont {
+  font-weight: 600;
+  font-size: 16px;
+}

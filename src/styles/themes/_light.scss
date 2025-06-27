@@ -1,0 +1,12 @@
+@use '../variables/index' as *;
+
+[data-theme='light'] {
+  --color-bg: #ffffff;
+  --color-text: #{$header-text-light};
+  --color-secondary-header-text: #{$header-secondary-text-light};
+  --color-primary: #b19b5e;
+  --color-header-bg-primary: #{$header-bg-light};
+  --color-header-text: #ffffff;
+  --color-button-bg: #ffffff;
+  --color-card-shadow: rgba(0, 0, 0, 0.1);
+}

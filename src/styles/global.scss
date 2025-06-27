@@ -1,0 +1,17 @@
+@use './variables/index' as *;
+@use './themes/index';
+
+:root {
+  --color-header-bg-light: rgb(177, 139, 94);
+  --color-header-text-light: rgb(255, 255, 255);
+  --color-header-bg-dark: #2f2a23;
+  --color-header-text-dark: #f5f5f5;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
