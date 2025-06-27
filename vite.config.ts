@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
   ],
+  base: '/',
   css: {
     modules: {
       generateScopedName: '[name]__[local]___[hash:base64:5]',
