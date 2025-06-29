@@ -9,7 +9,7 @@ import type { DynamicTableProps, TableState } from '@/components/Table/types.ts'
 
 
 
-const DynamicTable: React.FC<DynamicTableProps> = ({ renderExpandedRow,loading,columns, data, page, onPrev, onNext }) => {
+const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpandedRow,loading,columns, data, page, onPrev, onNext }) => {
   const navigate = useNavigate();
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [tableState, setTableState] = useState<TableState>({
@@ -71,7 +71,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ renderExpandedRow,loading,c
                     <Button
                       title={'VIEW'}
                       onClickHandler={() => {
-                        navigate('/id')
+                        navigate(`${viewRoutePrefix}/${row.id}`)
                       }}
                       className={` ${styles.viewDetails}`}
                     />

@@ -6,7 +6,7 @@ export interface Column {
   type?: string;
 }
 
-interface CustomerData {
+export interface CustomerData {
   id: string;
   companyName: string;
   contactName: string;
@@ -22,6 +22,7 @@ interface CustomerData {
 }
 
 export interface DynamicTableProps {
+  viewRoutePrefix?: string;
   renderExpandedRow?: (row: CustomerData) => ReactNode;
   loading: boolean;
   columns: Column[];
