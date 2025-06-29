@@ -117,7 +117,7 @@ export const Header = () => {
                   flexWrap: 'nowrap',
                 }}
               >
-                {mainRoutesList?.map((routeItems: RouteItem) => (
+                {mainRoutesList?.filter((filter => filter?.exact))?.map((routeItems: RouteItem) => (
                   <NavLink    id={`nav${routeItems.key}`}   key={`nav${routeItems.key}`} to={`${routeItems?.path}`}   state={{ from: 'header' }} >
                   <li
                     className={`${routeItems.path === location.pathname ? HeaderStyles.active : ''}`}

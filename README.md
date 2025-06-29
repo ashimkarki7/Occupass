@@ -1,3 +1,7 @@
+# Add .env file  .env.local, .env, .env.production
+VITE_APP_URL='https://uitestapi.occupass.com'
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

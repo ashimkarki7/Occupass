@@ -1,17 +1,21 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import DynamicTable from '@/components/Table/Table.tsx';
 import { customerColumns } from '@/enums/tableEnums.ts';
-import type { CustomerData } from '@/components/Table/types';
+import type { CustomerData, PaginationParams } from '@/components/Table/types';
 
+interface Props {
+  getCustomers: (params: { skip?: number; take?: number,orderBy?:string|undefined,  orderByDesc?:string|undefined  }) => void;
+  customer: CustomerData[];
+  customerLoading: boolean;
+}
 
-
-const HomepageComponent: React.FC<any> = (props: any) => {
+const HomepageComponent: React.FC<Props> = (props) => {
   const { getCustomers, customer, customerLoading } = props;
 
 
-  const [page, setPage] = useState<number>(1);
+  const [pagination, setPagination] = useState<PaginationParams>({ skip: 0, take: 10,orderBy: 'contactName',  orderByDesc: undefined });
   useEffect(() => {
-    getCustomers();
+    getCustomers(pagination);
   }, []);
 
   const renderExpandedRow = useCallback((row: CustomerData) => (
@@ -24,9 +28,13 @@ const HomepageComponent: React.FC<any> = (props: any) => {
     </div>
   ), []);
 
-  const handlePrev = useCallback(() => setPage(p => Math.max(p - 1, 1)), []);
-  const handleNext = useCallback(() => setPage(p => p + 1), []);
-
+  const handlePaginationChange = useCallback(
+    (params: { skip: number; take: number; orderBy?:string|undefined;  orderByDesc?:string|undefined;  }) => {
+      setPagination(params);
+      getCustomers(params);
+    },
+    []
+  );
 
   return (
       <Fragment>
@@ -36,9 +44,8 @@ const HomepageComponent: React.FC<any> = (props: any) => {
           loading={customerLoading}
           columns={customerColumns}
           data={customer}
-          page={page}
-          onPrev={handlePrev}
-          onNext={handleNext}
+          pagination={pagination}
+          onPaginationChange={handlePaginationChange}
         />
       </Fragment>
   );

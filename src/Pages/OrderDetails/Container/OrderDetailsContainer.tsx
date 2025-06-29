@@ -12,8 +12,10 @@ const OrderDetailsContainer = (props: any) => {
   const orderLoading = useAppSelector((state) => state?.orderData?.loading);
 
   props = { ...props, order, orderLoading };
-  const getOrder = () => {
-    return dispatch(orderSlice.getOrder());
+
+
+  const getOrder = (formData: any): any => {
+    return dispatch(orderSlice.getOrder(formData));
   };
 
 

@@ -9,8 +9,32 @@ const initialState: any = {
 };
 export const getCustomers = createAsyncThunk(
   'customerSlice/fetch',
-  (_, { rejectWithValue }) => {
-    return v2Fetch(`query/customers`)
+  (formData:any, { rejectWithValue }) => {
+    let queryParams = '';
+    Object.keys(formData).forEach((key) => {
+      switch (key) {
+        case 'skip': {
+          if (formData[key] || formData[key] === 0) queryParams += `skip=${encodeURIComponent(formData[key])}`;
+          break;
+        }
+        case 'take': {
+          if (formData[key] || formData[key] === 0)
+            queryParams += `&take=${encodeURIComponent(formData[key])}`;
+          break;
+        }
+        case 'orderBy': {
+          if (formData[key] && formData[key] !== undefined )
+            queryParams += `&orderBy=${encodeURIComponent(formData[key])}`;
+          break;
+        }
+        case 'orderByDesc': {
+          if (formData[key] || formData[key] !== undefined )
+            queryParams += `&orderByDesc=${encodeURIComponent(formData[key])}`;
+          break;
+        }
+      }
+    });
+    return v2Fetch(`query/customers?${queryParams}&Include=total`)
       .then((response: any) => {
         if (response.status === 200) {
           return Promise.resolve(response?.data);

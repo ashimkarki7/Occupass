@@ -16,7 +16,7 @@ export const mainRoutesList: RouteItem[] = [
     name: 'Customer Details',
     path: '/customers/:id',
     LazyComponent: lazy(() => import('@pages/CustomerDetails/Container/CustomerDetailsContainer.tsx')),
-    exact: true,
+    exact: false,
   },
   {
     key: 2,
@@ -32,13 +32,13 @@ export const mainRoutesList: RouteItem[] = [
     name: 'Order Details',
     path: '/orders/:id',
     LazyComponent: lazy(() => import('@pages/OrderDetails/Container/OrderDetailsContainer.tsx')),
-    exact: true,
+    exact: false,
   },
   {
     key: 3,
     name: 'Not Found',
     path: '*',
     LazyComponent: lazy(() => import('@pages/NotFound/NotFound.tsx')),
-    exact: true,
+    exact: false,
   },
 ];

@@ -1,16 +1,22 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import DynamicTable from '@/components/Table/Table.tsx';
 import {  orderColumns } from '@/enums/tableEnums.ts';
-import type { CustomerData } from '@/components/Table/types.ts';
+import type { CustomerData, PaginationParams } from '@/components/Table/types.ts';
 
 
-const OrderComponent: React.FC<any> = (props: any) => {
+interface Props {
+  getOrder:(params: { skip?: number; take?: number,orderBy?:string|undefined,  orderByDesc?:string|undefined  }) => void;
+  order: CustomerData[];
+  orderLoading: boolean;
+}
+
+const OrderComponent: React.FC<Props> = (props) => {
   const { getOrder, order, orderLoading } = props;
 
+  const [pagination, setPagination] = useState<PaginationParams>({ skip: 0, take: 10,orderBy: 'customerId',  orderByDesc: undefined });
 
-  const [page, setPage] = useState<number>(1);
   useEffect(() => {
-    getOrder();
+    getOrder(pagination);
   }, []);
 
 
@@ -24,9 +30,14 @@ const OrderComponent: React.FC<any> = (props: any) => {
     </div>
   ), []);
 
-  const handlePrev = useCallback(() => setPage(p => Math.max(p - 1, 1)), []);
-  const handleNext = useCallback(() => setPage(p => p + 1), []);
 
+  const handlePaginationChange = useCallback(
+    (params: { skip: number; take: number; orderBy?:string|undefined;  orderByDesc?:string|undefined;  }) => {
+      setPagination(params);
+      getOrder(params);
+    },
+    []
+  );
 
 
   return (
@@ -37,9 +48,8 @@ const OrderComponent: React.FC<any> = (props: any) => {
         loading={orderLoading}
         columns={orderColumns}
         data={order}
-        page={page}
-        onPrev={handlePrev}
-        onNext={handleNext}
+        pagination={pagination}
+        onPaginationChange={handlePaginationChange}
       />
     </Fragment>
   );

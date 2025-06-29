@@ -31,11 +31,23 @@
 
   .sortIcon {
     margin-left: 0.4rem;
-    font-size: 0.75rem;
-    vertical-align: middle;
-    display: inline-block;
+    align-items: stretch;
+    flex-direction: column;
+    display: inline-flex;
+    line-height: 1;
+    svg{
+      font-size: 20px;
+      height: 1em;
+      width: 1em;
+    }
+  }
+  .activeSortIcon {
+    color: #fdf7f2;
   }
 
+  .inactiveSortIcon {
+    color: #bbb;
+  }
   td {
     padding: 0.75rem;
     background-color: #fdf7f2;
@@ -70,4 +82,39 @@
   border-left: 4px solid #FF8000;
   border-radius: 4px;
   font-size: 0.9rem;
+}
+
+.pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  button {
+    background-color: #a47d4f;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:disabled {
+      background-color: #ddd;
+      color: #999;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: #cc6600;
+    }
+  }
+
+  span {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+  }
 }

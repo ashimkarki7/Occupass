@@ -21,19 +21,20 @@ export interface CustomerData {
   [key: string]: string | number | undefined;
 }
 
+export interface PaginationParams {
+  skip: number;
+  take: number;
+  orderBy?:string|undefined
+  orderByDesc?:string|undefined
+}
+
 export interface DynamicTableProps {
   viewRoutePrefix?: string;
   renderExpandedRow?: (row: CustomerData) => ReactNode;
   loading: boolean;
   columns: Column[];
   data: CustomerData[];
-  page: number;
-  onPrev: () => void;
-  onNext: () => void;
+  pagination: PaginationParams;
+  onPaginationChange: (params: PaginationParams) => void;
 }
 
-export interface TableState {
-  sortKey: string;
-  sortOrder: 'asc' | 'desc';
-  currentPage: number;
-}

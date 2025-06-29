@@ -1,32 +1,37 @@
-import React, { Fragment, useState, memo } from 'react';
+import React, { Fragment, useState, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import dayjs from 'dayjs';
 import { FaSortUp, FaSortDown } from 'react-icons/fa';
 import styles from './DynamicTable.module.scss';
 import Button from '@/components/Button/Button.tsx';
 import Loader from '@/components/Loader/Loader.tsx';
-import type { DynamicTableProps, TableState } from '@/components/Table/types.ts';
+import type { DynamicTableProps, PaginationParams } from '@/components/Table/types.ts';
 
 
 
-const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpandedRow,loading,columns, data, page, onPrev, onNext }) => {
+const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpandedRow,loading,columns, data, pagination,onPaginationChange }) => {
   const navigate = useNavigate();
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
-  const [tableState, setTableState] = useState<TableState>({
-    sortKey: 'contactName',
-    sortOrder: 'asc',
-    currentPage: page
-  });
   const handleRowClick = (idx: number) => {
     setExpandedRow(expandedRow === idx ? null : idx);
   };
 
   const handleSort = (key: string) => {
-    setTableState((prev) => ({
-      ...prev,
-      sortKey: key,
-      sortOrder: prev.sortKey === key && prev.sortOrder === 'asc' ? 'desc' : 'asc'
-    }));
+    const updatedParams: PaginationParams = {
+      skip: 0,
+      take: pagination.take,
+      orderBy: undefined,
+      orderByDesc: undefined
+    };
+
+    if (pagination?.orderByDesc && key ===  pagination?.orderByDesc ) {
+      updatedParams.orderBy = key;
+    }else if (pagination?.orderBy && key ===  pagination?.orderBy) {
+      updatedParams.orderByDesc = key;
+    }else {
+      updatedParams.orderBy = key;
+    }
+    onPaginationChange(updatedParams);
   };
 
   const formatDate = (dateStr: string): string => {
@@ -35,6 +40,20 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpan
     const timestamp = parseInt(match[1], 10);
     return dayjs(timestamp).format('MM/DD/YYYY');
   };
+
+  const handlePrev = useCallback(() => {
+    onPaginationChange({
+      skip: Math.max(pagination.skip - pagination.take, 0),
+      take: pagination.take
+    });
+  }, [pagination, onPaginationChange]);
+
+  const handleNext = useCallback(() => {
+    onPaginationChange({
+      skip: pagination.skip + pagination.take,
+      take: pagination.take
+    });
+  }, [pagination, onPaginationChange]);
 
 
   return (
@@ -45,8 +64,20 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpan
           <tr>
             {columns?.map((col) => (
               <th key={col.key}>{col.label}  <span id={`sortkey${col.key}`} className={styles.sortIcon} onClick={() => handleSort(col.key)}>
-             {tableState.sortKey === col.key && tableState.sortOrder === 'asc' && <FaSortUp />}
-                {tableState.sortKey === col.key && tableState.sortOrder === 'desc' && <FaSortDown />}
+                {pagination?.orderBy !== col.key &&  pagination?.orderByDesc !== col.key
+                ? (  <FaSortUp
+                    className={
+                  styles.inactiveSortIcon
+                    }
+                  />) : pagination.orderBy === col.key ? (
+                    <FaSortUp  className={styles.activeSortIcon} />
+                  ) : (
+                    <FaSortDown
+                      className={styles.activeSortIcon
+                      }/>
+                  )}
+
+
                   </span></th>
 
             ))}
@@ -57,12 +88,12 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpan
           {loading ? (
             <tr key="loading-row">
               <td colSpan={columns.length + 1}>
-                <Loader minHeight="400px" />
+                <Loader minHeight="340px" />
               </td>
             </tr>
           ) : (
             data?.map((row, idx) => (
-              <Fragment key={idx}>
+              <Fragment  key={row.id ?? idx}>
                 <tr key={idx}  onClick={() => handleRowClick(idx)}>
                   {columns?.map((col) => (
                     <td key={col.key}>{row[col.key] && col.type  === 'date' ?  formatDate(row[col.key] as string) : row[col.key]}</td>
@@ -90,9 +121,9 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpan
         </table>
       </div>
       <div className={styles.pagination}>
-        <button onClick={onPrev} disabled={page === 1}>mock</button>
-        <span>mock {page}</span>
-        <button onClick={onNext}>mock</button>
+        <button onClick={handlePrev} disabled={pagination.skip === 0}>Prev</button>
+        <span>Page {Math.floor(pagination.skip / pagination.take) + 1}</span>
+        <button onClick={handleNext}>Next</button>
       </div>
     </>
   );

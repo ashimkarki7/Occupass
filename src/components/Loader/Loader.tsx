@@ -7,7 +7,7 @@ interface LoaderProps {
   color?: string;
 }
 
-const Loader: React.FC<LoaderProps> = ({ minHeight = '200px', size = '2.5rem', color = '#FF8000' }) => {
+const Loader: React.FC<LoaderProps> = ({ minHeight = '200px', size = '1.5rem', color = '#FF8000' }) => {
   return (
     <div className={styles.loader} style={{ minHeight }}>
       <div

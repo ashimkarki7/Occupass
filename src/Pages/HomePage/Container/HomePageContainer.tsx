@@ -12,9 +12,13 @@ const HomePageContainer = (props: any) => {
   const customerLoading = useAppSelector((state) => state?.customerData?.loading);
 
   props = { ...props, customer, customerLoading };
-  const getCustomers = () => {
-    return dispatch(homepageSlice.getCustomers());
+
+
+  const getCustomers = (formData: any): any => {
+    return dispatch(homepageSlice.getCustomers(formData));
   };
+
+
 
 
   return <HomepageComponent {...props} getCustomers={getCustomers}  />;
