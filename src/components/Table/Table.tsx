@@ -77,7 +77,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ renderExpandedRow,loading,c
                     />
                   </td>
                 </tr>
-                {expandedRow === idx && (
+                {expandedRow === idx  && renderExpandedRow && (
                   <tr>
                     <td colSpan={columns.length + 1}>{renderExpandedRow(row)}</td>
                   </tr>
