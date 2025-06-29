@@ -1,0 +1,72 @@
+.tableContainer {
+  margin: 2rem 1.5rem 0;
+  min-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: 60vh;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.customerTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  font-family: 'Sora', sans-serif;
+  border-radius: 8px;
+  th {
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    background-color: #B18B5E;
+    color: white;
+    padding: 0.75rem;
+    z-index: 10;
+    font-size: 0.95rem;
+  }
+  tr:hover {
+    background-color: rgba(255, 128, 0, 0.08);
+  }
+
+  .sortIcon {
+    margin-left: 0.4rem;
+    font-size: 0.75rem;
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+  td {
+    padding: 0.75rem;
+    background-color: #fdf7f2;
+    color: #333;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(255, 128, 0, 0.08);
+    }
+  }
+
+
+  button {
+    background-color: #a47d4f;
+    color: white;
+    border: 1px solid #a47d4f;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  button:hover {
+    background-color: #cc6600;
+  }
+}
+
+.customerDetail {
+  background-color: #fffbe9;
+  padding: 1rem;
+  border-left: 4px solid #FF8000;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}

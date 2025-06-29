@@ -3,11 +3,8 @@ import axios from 'axios';
 export const httpBase = () => {
   const baseURL3001 = import.meta.env.VITE_APP_URL;
   const V2Headers = {
-    Accept: '*',
-    'Content-Type': 'text/plain',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers':
-      'Origin, X-Requested-With, Content-Type, Accept',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   };
 
   const api = axios.create({
