@@ -16,6 +16,15 @@ const HomepageComponent: React.FC<any> = (props: any) => {
   return (
       <Fragment>
         <DynamicTable
+          renderExpandedRow={(row) => (
+            <div>
+              <strong>Address:</strong> {row.address}, {row.city}, {row.postalCode}
+              <br />
+              <strong>ID:</strong> {row.id || '—'}
+              <br />
+              <strong>Fax:</strong> {row.fax}
+            </div>
+          )}
           loading={customerLoading}
           columns={customerColumns}
           data={customer}

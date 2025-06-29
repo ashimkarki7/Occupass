@@ -5,7 +5,7 @@ const PageLayout = (props: any) => {
     <div id="PageLayout">
         <Header/>
       <div style={{
-        minWidth: '432px;',
+        minWidth: '432px',
       }}>
         <div id={'viewContent'}>{props.children}</div>
       </div>

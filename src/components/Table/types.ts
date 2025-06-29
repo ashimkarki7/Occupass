@@ -1,6 +1,9 @@
+import {type ReactNode} from 'react';
+
 export interface Column {
   key: string;
   label: string;
+  type?: string;
 }
 
 interface CustomerData {
@@ -15,9 +18,11 @@ interface CustomerData {
   phone: string;
   fax: string;
   email?: string;
+  [key: string]: string | number | undefined;
 }
 
 export interface DynamicTableProps {
+  renderExpandedRow?: (row: CustomerData) => ReactNode;
   loading: boolean;
   columns: Column[];
   data: CustomerData[];

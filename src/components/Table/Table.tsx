@@ -1,5 +1,6 @@
 import React, { Fragment, useState, memo } from 'react';
 import { useNavigate } from 'react-router';
+import dayjs from 'dayjs';
 import { FaSortUp, FaSortDown } from 'react-icons/fa';
 import styles from './DynamicTable.module.scss';
 import Button from '@/components/Button/Button.tsx';
@@ -8,7 +9,7 @@ import type { DynamicTableProps, TableState } from '@/components/Table/types.ts'
 
 
 
-const DynamicTable: React.FC<DynamicTableProps> = ({ loading,columns, data, page, onPrev, onNext }) => {
+const DynamicTable: React.FC<DynamicTableProps> = ({ renderExpandedRow,loading,columns, data, page, onPrev, onNext }) => {
   const navigate = useNavigate();
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [tableState, setTableState] = useState<TableState>({
@@ -26,6 +27,13 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ loading,columns, data, page
       sortKey: key,
       sortOrder: prev.sortKey === key && prev.sortOrder === 'asc' ? 'desc' : 'asc'
     }));
+  };
+
+  const formatDate = (dateStr: string): string => {
+    const match = /\/Date\((\d+)(?:[+-]\d+)?\)\//.exec(dateStr);
+    if (!match) return dateStr;
+    const timestamp = parseInt(match[1], 10);
+    return dayjs(timestamp).format('MM/DD/YYYY');
   };
 
 
@@ -57,7 +65,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ loading,columns, data, page
               <Fragment key={idx}>
                 <tr key={idx}  onClick={() => handleRowClick(idx)}>
                   {columns?.map((col) => (
-                    <td key={col.key}>{row[col.key]}</td>
+                    <td key={col.key}>{row[col.key] && col.type  === 'date' ?  formatDate(row[col.key] as string) : row[col.key]}</td>
                   ))}
                   <td>
                     <Button
@@ -71,15 +79,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ loading,columns, data, page
                 </tr>
                 {expandedRow === idx && (
                   <tr>
-                    <td colSpan={columns.length + 1}>
-                      <div className={styles.customerDetail}>
-                        <strong>Address:</strong> {row.address}, {row.city}, {row.postalCode}
-                        <br />
-                        <strong>Email:</strong> {row.email || '—'}
-                        <br />
-                        <strong>Fax:</strong> {row.fax}
-                      </div>
-                    </td>
+                    <td colSpan={columns.length + 1}>{renderExpandedRow(row)}</td>
                   </tr>
                 )}
               </Fragment>
