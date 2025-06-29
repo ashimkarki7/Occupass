@@ -6,10 +6,12 @@ import styles from './DynamicTable.module.scss';
 import Button from '@/components/Button/Button.tsx';
 import Loader from '@/components/Loader/Loader.tsx';
 import type { DynamicTableProps, PaginationParams } from '@/components/Table/types.ts';
+import { formatDate } from '@utility/helper.ts';
 
 
 
-const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpandedRow,loading,columns, data, pagination,onPaginationChange }) => {
+const DynamicTable: React.FC<DynamicTableProps> = ({ total,viewRoutePrefix,renderExpandedRow,loading,columns, data, pagination,onPaginationChange }) => {
+  console.log(columns,data);
   const navigate = useNavigate();
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const handleRowClick = (idx: number) => {
@@ -34,12 +36,6 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpan
     onPaginationChange(updatedParams);
   };
 
-  const formatDate = (dateStr: string): string => {
-    const match = /\/Date\((\d+)(?:[+-]\d+)?\)\//.exec(dateStr);
-    if (!match) return dateStr;
-    const timestamp = parseInt(match[1], 10);
-    return dayjs(timestamp).format('MM/DD/YYYY');
-  };
 
   const handlePrev = useCallback(() => {
     onPaginationChange({
@@ -122,8 +118,10 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ viewRoutePrefix,renderExpan
       </div>
       <div className={styles.pagination}>
         <button onClick={handlePrev} disabled={pagination.skip === 0}>Prev</button>
-        <span>Page {Math.floor(pagination.skip / pagination.take) + 1}</span>
-        <button onClick={handleNext}>Next</button>
+        <span>Page {Math.floor(pagination.skip / pagination.take) + 1}
+          {total ? ` of ${Math.ceil(total / pagination.take)}` : ''}
+        </span>
+        <button onClick={handleNext} disabled={Math.floor(pagination.skip / pagination.take) + 1 ===  Math.ceil(total / pagination.take) -1}>Next</button>
       </div>
     </>
   );

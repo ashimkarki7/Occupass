@@ -7,10 +7,11 @@ interface Props {
   getCustomers: (params: { skip?: number; take?: number,orderBy?:string|undefined,  orderByDesc?:string|undefined  }) => void;
   customer: CustomerData[];
   customerLoading: boolean;
+  total: number;
 }
 
 const HomepageComponent: React.FC<Props> = (props) => {
-  const { getCustomers, customer, customerLoading } = props;
+  const { getCustomers, customer, customerLoading ,total} = props;
 
 
   const [pagination, setPagination] = useState<PaginationParams>({ skip: 0, take: 10,orderBy: 'contactName',  orderByDesc: undefined });
@@ -38,15 +39,21 @@ const HomepageComponent: React.FC<Props> = (props) => {
 
   return (
       <Fragment>
-        <DynamicTable
-          viewRoutePrefix="/customers"
-          renderExpandedRow={renderExpandedRow}
-          loading={customerLoading}
-          columns={customerColumns}
-          data={customer}
-          pagination={pagination}
-          onPaginationChange={handlePaginationChange}
-        />
+        <div style={{
+          margin: '2rem 1.5rem 0'
+        }}>
+          <DynamicTable
+            total={total}
+            viewRoutePrefix="/customers"
+            renderExpandedRow={renderExpandedRow}
+            loading={customerLoading}
+            columns={customerColumns}
+            data={customer}
+            pagination={pagination}
+            onPaginationChange={handlePaginationChange}
+          />
+        </div>
+
       </Fragment>
   );
 };

@@ -9,9 +9,13 @@ const HomePageContainer = (props: any) => {
   const customer = useAppSelector((state) => state?.customerData?.payload?.
     results
   );
+
+  const total = useAppSelector((state) => state?.customerData?.payload?.
+    total
+  );
   const customerLoading = useAppSelector((state) => state?.customerData?.loading);
 
-  props = { ...props, customer, customerLoading };
+  props = { ...props, customer, customerLoading,total };
 
 
   const getCustomers = (formData: any): any => {

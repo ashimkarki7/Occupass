@@ -1,48 +1,46 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import DynamicTable from '@/components/Table/Table.tsx';
-import {  orderColumns } from '@/enums/tableEnums.ts';
-import type { CustomerData } from '@/components/Table/types.ts';
+import React, { Fragment, useEffect } from 'react';
+import styles from './Order.module.scss';
+import DetailCard from '@common/DetailCard';
+import { useParams,useNavigate } from 'react-router';
+import { formatDate } from '@utility/helper.ts';
 
 
-const OrderComponent: React.FC<any> = (props: any) => {
-  const { getOrder, order, orderLoading } = props;
 
-
-  const [page, setPage] = useState<number>(1);
+const OrderDetail: React.FC<any> = (props: any) => {
+  const { getOrderDetail, order } = props;
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   useEffect(() => {
-    getOrder();
+    getOrderDetail({id:id});
   }, []);
-
-
-  const renderExpandedRow = useCallback((row: CustomerData) => (
-    <div>
-      <strong>Ship Address:</strong> {row.shipAddress}, {row.shipCity}, {row.shipCountry},{row.shipPostalCode}
-      <br />
-      <strong>Ship Name:</strong> {row.shipName || '—'}
-      <br />
-      <strong>shipVia:</strong> {row.shipVia}
-    </div>
-  ), []);
-
-  const handlePrev = useCallback(() => setPage(p => Math.max(p - 1, 1)), []);
-  const handleNext = useCallback(() => setPage(p => p + 1), []);
 
 
 
   return (
     <Fragment>
-      <DynamicTable
-        viewRoutePrefix="/orders"
-        renderExpandedRow={renderExpandedRow}
-        loading={orderLoading}
-        columns={orderColumns}
-        data={order}
-        page={page}
-        onPrev={handlePrev}
-        onNext={handleNext}
-      />
+      <div className={styles.wrapper}>
+        <button className={styles.backBtn} onClick={() => navigate(-1)}>&larr; Back to Orders</button>
+
+        <h1 className={styles.customerName}>Order ID: {order?.id}</h1>
+
+        <div className={styles.infoSection}>
+          <div className={styles.detailBox}>
+            <DetailCard
+              styles={styles}
+              title="Order Information"
+              fields={[
+                { label: 'customerId', value: order?.customerId },
+                { label: 'shipVia', value: order?.shipVia },
+                { label: 'Address', value: `${order?.shipAddress}, ${order?.shipCity},${order?.shipCountry}, ${order?.shipPostalCode}` },
+                { label: 'Order Date', value: formatDate(order?.orderDate) },
+                { label: 'Required Date', value: formatDate(order?.requiredDate) },
+              ]}
+            />
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };
 
-export default OrderComponent;
+export default OrderDetail;

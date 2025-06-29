@@ -1,22 +1,27 @@
-import HomepageComponent from '@pages/HomePage/component';
+import CustomerDetailComponent from '@pages/CustomerDetails/component';
 import { useAppDispatch, useAppSelector } from '@/store/reduxHook.ts';
-import * as homepageSlice from '../slice/slice.ts';
+import * as detailSlice from '../slice/slice.ts';
+import type { IObjectLiteral } from '@common/types.ts';
 
 const CustomerDetailsContainer = (props: any) => {
 
   const dispatch = useAppDispatch();
 
-  const customer = useAppSelector((state) => state?.customerData?.payload?.
-    results
+  const customer = useAppSelector((state) => state?.customerDetail?.payload?.customer
   );
-  const customerLoading = useAppSelector((state) => state?.customerData?.loading);
+  const orders = useAppSelector((state) => state?.customerDetail?.payload?.orders?.map((res:IObjectLiteral)=>{
+    return {...res?.order,...res?.orderDetails};
+    })
+  );
 
-  props = { ...props, customer, customerLoading };
-  const getCustomers = () => {
-    return dispatch(homepageSlice.getCustomers());
+  const customerLoading = useAppSelector((state) => state?.customerDetail?.loading);
+
+  props = { ...props, customer, customerLoading,orders };
+  const getCustomerDetails = (formData:any) => {
+    return dispatch(detailSlice.getCustomerDetails(formData));
   };
 
 
-  return <HomepageComponent {...props} getCustomers={getCustomers}  />;
+  return <CustomerDetailComponent {...props} getCustomerDetails={getCustomerDetails}  />;
 };
 export default CustomerDetailsContainer;

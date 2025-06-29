@@ -1,24 +1,25 @@
-import OrderComponent from '@pages/Orders/component';
+import OrderComponent from '@pages/OrderDetails/component';
 import { useAppDispatch, useAppSelector } from '@/store/reduxHook.ts';
-import * as orderSlice from '@pages/Orders/slice/slice.ts';
+import * as orderSlice from '@pages/OrderDetails/slice/slice.ts';
 
 
 const OrderDetailsContainer = (props: any) => {
   const dispatch = useAppDispatch();
 
-  const order = useAppSelector((state) => state?.orderData?.payload?.
-    results
+  const order = useAppSelector((state) => state?.orderDetailData?.payload?.results?.[0]
   );
-  const orderLoading = useAppSelector((state) => state?.orderData?.loading);
+  const orderLoading = useAppSelector((state) => state?.orderDetailData?.loading);
+
+
 
   props = { ...props, order, orderLoading };
 
 
-  const getOrder = (formData: any): any => {
-    return dispatch(orderSlice.getOrder(formData));
+  const getOrderDetail = (formData: any): any => {
+    return dispatch(orderSlice.getOrderDetail(formData));
   };
 
 
-  return <OrderComponent {...props}  getOrder={getOrder} />;
+  return <OrderComponent {...props}  getOrderDetail={getOrderDetail} />;
 };
 export default OrderDetailsContainer;

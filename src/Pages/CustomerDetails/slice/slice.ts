@@ -7,14 +7,14 @@ const initialState: any = {
   error: '',
   loading: true,
 };
-export const getCustomers = createAsyncThunk(
-  'customerSlice/fetch',
+export const getCustomerDetails = createAsyncThunk(
+  'customerDetailSlice/fetch',
   (formData: any, { rejectWithValue }) => {
     let queryParams = '';
     Object.keys(formData).forEach((key) => {
       switch (key) {
-        case 'page': {
-          if (formData[key]) queryParams += `page=${formData[key]}`;
+        case 'id': {
+          if (formData[key]) queryParams += `id=${formData[key]}`;
           break;
         }
         case 'name': {
@@ -24,7 +24,7 @@ export const getCustomers = createAsyncThunk(
         }
       }
     });
-    return v2Fetch(`query/customers?${queryParams}`)
+    return v2Fetch(`api/GetCustomerDetails?${queryParams}`)
       .then((response: any) => {
         if (response.status === 200) {
           return Promise.resolve(response?.data);
@@ -37,28 +37,28 @@ export const getCustomers = createAsyncThunk(
   }
 );
 
-const customerSlice = createSlice({
-  name: 'customerSlice',
+const customerDetailSlice = createSlice({
+  name: 'customerDetailSlice',
   initialState,
   reducers: {
-    cleanCustomerData(state) {
+    cleanCustomerDetailData(state) {
       state.loading = false;
       state.payload = [];
       state.error = '';
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getCustomers.pending, (state) => {
+    builder.addCase(getCustomerDetails.pending, (state) => {
       state.loading = true;
       state.error = '';
       state.payload = [];
     });
 
-    builder.addCase(getCustomers.fulfilled, (state, action) => {
+    builder.addCase(getCustomerDetails.fulfilled, (state, action) => {
       state.loading = false;
       state.payload = action.payload;
     });
-    builder.addCase(getCustomers.rejected, (state, action) => {
+    builder.addCase(getCustomerDetails.rejected, (state, action) => {
       state.loading = false;
       state.payload = [];
       state.error = action.payload?.toString();
@@ -66,5 +66,5 @@ const customerSlice = createSlice({
   },
 });
 
-export const { cleanCustomerData } = customerSlice.actions;
-export default customerSlice.reducer;
+export const { cleanCustomerDetailData } = customerDetailSlice.actions;
+export default customerDetailSlice.reducer;

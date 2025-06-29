@@ -8,10 +8,11 @@ interface Props {
   getOrder:(params: { skip?: number; take?: number,orderBy?:string|undefined,  orderByDesc?:string|undefined  }) => void;
   order: CustomerData[];
   orderLoading: boolean;
+  total: number;
 }
 
 const OrderComponent: React.FC<Props> = (props) => {
-  const { getOrder, order, orderLoading } = props;
+  const { getOrder, order, orderLoading,total } = props;
 
   const [pagination, setPagination] = useState<PaginationParams>({ skip: 0, take: 10,orderBy: 'customerId',  orderByDesc: undefined });
 
@@ -42,7 +43,11 @@ const OrderComponent: React.FC<Props> = (props) => {
 
   return (
     <Fragment>
+      <div style={{
+        margin: '2rem 1.5rem 0'
+      }}>
       <DynamicTable
+        total={total}
         viewRoutePrefix="/orders"
         renderExpandedRow={renderExpandedRow}
         loading={orderLoading}
@@ -51,6 +56,7 @@ const OrderComponent: React.FC<Props> = (props) => {
         pagination={pagination}
         onPaginationChange={handlePaginationChange}
       />
+      </div>
     </Fragment>
   );
 };

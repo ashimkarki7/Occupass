@@ -7,10 +7,10 @@ const initialState: any = {
   error: '',
   loading: true,
 };
-export const getOrder = createAsyncThunk(
-  'orderSlice/fetch',
+export const getOrderDetail = createAsyncThunk(
+  'orderDetailSlice/fetch',
   (_, { rejectWithValue }) => {
-    return v2Fetch(`query/orders`)
+    return v2Fetch(`query/orders?id=10643`)
       .then((response: any) => {
         if (response.status === 200) {
           return Promise.resolve(response?.data);
@@ -23,28 +23,28 @@ export const getOrder = createAsyncThunk(
   }
 );
 
-const orderSlice = createSlice({
-  name: 'orderSlice',
+const orderDetailSlice = createSlice({
+  name: 'orderDetailSlice',
   initialState,
   reducers: {
-    cleanOrderData(state) {
+    cleanOrderDetailData(state) {
       state.loading = false;
       state.payload = [];
       state.error = '';
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getOrder.pending, (state) => {
+    builder.addCase(getOrderDetail.pending, (state) => {
       state.loading = true;
       state.error = '';
       state.payload = [];
     });
 
-    builder.addCase(getOrder.fulfilled, (state, action) => {
+    builder.addCase(getOrderDetail.fulfilled, (state, action) => {
       state.loading = false;
       state.payload = action.payload;
     });
-    builder.addCase(getOrder.rejected, (state, action) => {
+    builder.addCase(getOrderDetail.rejected, (state, action) => {
       state.loading = false;
       state.payload = [];
       state.error = action.payload?.toString();
@@ -52,5 +52,5 @@ const orderSlice = createSlice({
   },
 });
 
-export const { cleanOrderData } = orderSlice.actions;
-export default orderSlice.reducer;
+export const { cleanOrderDetailData } = orderDetailSlice.actions;
+export default orderDetailSlice.reducer;
