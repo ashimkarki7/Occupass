@@ -1,6 +1,5 @@
 import React, { Fragment, useState, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router';
-import dayjs from 'dayjs';
 import { FaSortUp, FaSortDown } from 'react-icons/fa';
 import styles from './DynamicTable.module.scss';
 import Button from '@/components/Button/Button.tsx';
