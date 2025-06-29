@@ -4,7 +4,7 @@ import { lazy } from 'react';
 export const mainRoutesList: RouteItem[] = [
   {
     key: 1,
-    name: 'Dashboard',
+    name: 'Customers',
     path: '/',
     LazyComponent: lazy(
       () => import('@pages/HomePage/Container/HomePageContainer.tsx')
@@ -13,6 +13,15 @@ export const mainRoutesList: RouteItem[] = [
   },
   {
     key: 2,
+    name: 'Orders',
+    path: '/orders',
+    LazyComponent: lazy(
+      () => import('@pages/Orders/Container/OrderContainer.tsx')
+    ),
+    exact: true,
+  },
+  {
+    key: 3,
     name: 'Not Found',
     path: '*',
     LazyComponent: lazy(() => import('@pages/NotFound/NotFound.tsx')),
