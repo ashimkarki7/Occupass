@@ -10,7 +10,8 @@
       "@pages/*": ["./src/Pages/*"],
       "@routes/*": ["./src/routes/*"],
       "@common/*": ["./src/common/*"],
-      "@assets/*": ["./src/assets/*"]
+      "@assets/*": ["./src/assets/*"],
+      "@utility/*": ["./src/utility/*"]
     }
   }
 }
