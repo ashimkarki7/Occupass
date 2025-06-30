@@ -29,6 +29,8 @@ export interface PaginationParams {
 }
 
 export interface DynamicTableProps {
+  sorting: boolean;
+  hasPagination: boolean;
   total: number;
   viewRoutePrefix?: string;
   renderExpandedRow?: (row: CustomerData) => ReactNode;

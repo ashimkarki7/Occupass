@@ -47,6 +47,8 @@ const OrderComponent: React.FC<Props> = (props) => {
         margin: '2rem 1.5rem 0'
       }}>
       <DynamicTable
+        sorting={true}
+        hasPagination={true}
         total={total}
         viewRoutePrefix="/orders"
         renderExpandedRow={renderExpandedRow}

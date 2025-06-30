@@ -43,6 +43,8 @@ const HomepageComponent: React.FC<Props> = (props) => {
           margin: '2rem 1.5rem 0'
         }}>
           <DynamicTable
+            sorting={true}
+            hasPagination={true}
             total={total}
             viewRoutePrefix="/customers"
             renderExpandedRow={renderExpandedRow}

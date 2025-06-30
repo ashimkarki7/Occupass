@@ -37,10 +37,9 @@ const CustomerDetail: React.FC<any> = (props: any) => {
 
           <div className={styles.infoSection}>
             <div className={styles.detailBox}>
-              <h2>Customer Information</h2>
               <DetailCard
                 styles={styles}
-                title=""
+                title={`Customer Information`}
                 fields={[
                   { label: 'Contact Name', value: customer?.contactName },
                   { label: 'Phone', value: customer?.phone },
@@ -55,6 +54,8 @@ const CustomerDetail: React.FC<any> = (props: any) => {
           <div className={styles.orderSection}>
             <h2>Orders</h2>
             <DynamicTable
+              sorting={false}
+              hasPagination={false}
               total={80}
               columns={orderColumns}
               data={orders}

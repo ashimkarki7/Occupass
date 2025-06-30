@@ -1,4 +1,5 @@
-import { useLocation,NavLink } from 'react-router-dom';
+import  { useCallback, useState,Fragment } from 'react';
+import { useLocation,NavLink,useNavigate } from 'react-router-dom';
 import HeaderStyles from './Header.module.scss';
 import {
   PhoneSvg,
@@ -11,12 +12,31 @@ import {
 import Button from '@/components/Button/Button.tsx';
 import { mainRoutesList } from '@routes/RouteListItems.tsx';
 import type { RouteItem } from '@routes/routes.ts';
+import DropdownComponent from '@/components/Dropdown/Dropdown.tsx';
+import type { IObjectLiteral } from '@common/types.ts';
+
 
 
 export const Header = () => {
   document.documentElement.setAttribute('data-theme', 'light');
+  const [dropdownOpen, setDropdownOpen] = useState({
+    name: '',
+    isOpen: false,
+  });
+  const navigate = useNavigate();
 
   const location = useLocation();
+
+  const renderDropDown = useCallback((options: any) => (
+    <Fragment>
+      {options?.filter((filterItems: { exact?: boolean }) => filterItems?.exact)?.map((optionItem: IObjectLiteral) => (
+        <li     style={{ color:optionItem.path === location.pathname ?'#FF8000'  : ''} }  key={optionItem.key} onClick={() => {
+          navigate(`${optionItem?.path}`);
+        }}>{optionItem?.name}</li>
+      ))}
+    </Fragment>
+  ), [location]);
+
 
   return (
     <header id="Header" className={HeaderStyles.headerContainer}>
@@ -188,9 +208,28 @@ export const Header = () => {
               alignItems: 'center',
             }}
           >
-            <div className={HeaderStyles.bar_icon}>
-              <span /> <span /> <span />
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <div className={HeaderStyles.bar_icon}
+                   onClick={() =>
+                     setDropdownOpen({
+                       name: 'menu',
+                       isOpen:
+                         dropdownOpen.name !== 'menu' || !dropdownOpen.isOpen,
+                     })
+                   }
+              >
+                <span /> <span /> <span />
+                {dropdownOpen.name === 'menu' && dropdownOpen.isOpen && (
+                  <DropdownComponent
+                    renderDropDown={renderDropDown}
+                    options={mainRoutesList}
+                    dropdownOpen={dropdownOpen}
+                    setDropdownOpen={setDropdownOpen}
+                  />
+                )}
+              </div>
             </div>
+
           </div>
         </div>
       </div>

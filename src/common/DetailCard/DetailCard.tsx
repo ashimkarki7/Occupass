@@ -13,7 +13,7 @@ const DetailCard: React.FC<DetailCardProps> = ({styles, title, fields }) => {
       <div className={styles.content}>
         {fields.map((field, idx) => (
           <div key={idx} className={styles.row}>
-            <span className={styles.label}>{field.label}:</span>
+            <span className={styles.label}>{field.label?.toUpperCase()}:</span>
             <span className={styles.value}>{field.value || '—'}</span>
           </div>
         ))}

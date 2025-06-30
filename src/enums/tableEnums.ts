@@ -14,3 +14,11 @@ export const orderColumns = [
   { key: 'freight', label: 'Freight',type:'string' },
   { key: 'shippedDate', label: 'Ship Date',type:'date' }
 ];
+
+export const orderDetailColumns = [
+  { key: 'discount', label: 'Discount',type:'string' },
+  { key: 'orderId', label: 'Order ID',type:'string' },
+  { key: 'productId', label: 'Product ID',type:'string' },
+  { key: 'quantity', label: 'Quantity',type:'string' },
+  { key: 'unitPrice', label: 'Unit Price',type:'string' }
+];

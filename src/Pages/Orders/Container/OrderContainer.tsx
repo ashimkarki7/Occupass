@@ -11,7 +11,10 @@ const OrderContainer = (props: any) => {
   );
   const orderLoading = useAppSelector((state) => state?.orderData?.loading);
 
-  props = { ...props, order, orderLoading };
+  const total = useAppSelector((state) => state?.orderData?.payload?.
+    total
+  );
+  props = { ...props, order, orderLoading,total };
   const getOrder = (formData: any): any => {
     return dispatch(orderSlice.getOrder(formData));
   };

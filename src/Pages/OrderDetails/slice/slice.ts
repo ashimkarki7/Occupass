@@ -9,8 +9,17 @@ const initialState: any = {
 };
 export const getOrderDetail = createAsyncThunk(
   'orderDetailSlice/fetch',
-  (_, { rejectWithValue }) => {
-    return v2Fetch(`query/orders?id=10643`)
+  (formData:any, { rejectWithValue }) => {
+    let queryParams = '';
+    Object.keys(formData).forEach((key) => {
+      switch (key) {
+        case 'id': {
+          if (formData[key]) queryParams += `customerId=${formData[key]}`;
+          break;
+        }
+      }
+    });
+    return v2Fetch(`api/GetOrders?${queryParams}`)
       .then((response: any) => {
         if (response.status === 200) {
           return Promise.resolve(response?.data);
