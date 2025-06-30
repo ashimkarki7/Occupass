@@ -33,7 +33,7 @@ const OrderDetail: React.FC<any> = (props: any) => {
       <div className={styles.wrapper}>
         <button className={styles.backBtn} onClick={() => navigate(-1)}>&larr; Back to Orders</button>
 
-        <h1 className={styles.customerName}>Order ID: {order?.id}</h1>
+        <h1 className={styles.customerName}>Order ID: {order?.order?.id}</h1>
 
         <div className={styles.infoSection}>
           <div className={styles.detailBox}>
@@ -43,9 +43,11 @@ const OrderDetail: React.FC<any> = (props: any) => {
               fields={[
                 { label: 'customerId', value: order?.order?.customerId },
                 { label: 'shipVia', value:  order?.order?.shipVia },
-                { label: 'Address', value: `${ order?.order?.shipAddress}, ${ order?.order?.shipCity},${order?.shipCountry}, ${ order?.order?.shipPostalCode}` },
-                { label: 'Order Date', value: formatDate(order?.orderDate) },
+                { label: 'Address', value: `${ order?.order?.shipAddress}, ${ order?.order?.shipCity},${order?.order?.shipCountry}, ${ order?.order?.shipPostalCode}` },
+                { label: 'Order Date', value: formatDate(order?.order?.orderDate) },
                 { label: 'Required Date', value: formatDate( order?.order?.requiredDate) },
+                { label: 'Shipped Date', value: formatDate( order?.order?.shippedDate) },
+                { label: 'Freight', value: order?.order?.freight },
               ]}
             />
           </div>

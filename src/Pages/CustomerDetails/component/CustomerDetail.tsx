@@ -33,8 +33,7 @@ const CustomerDetail: React.FC<any> = (props: any) => {
         <div className={styles.wrapper}>
           <button className={styles.backBtn} onClick={() => navigate(-1)}>&larr; Back to Customers</button>
 
-          <h1 className={styles.customerName}>{customer?.companyName}</h1>
-
+          <h1 className={styles.customerName}>Customer ID: {customer?.id}</h1>
           <div className={styles.infoSection}>
             <div className={styles.detailBox}>
               <DetailCard
@@ -46,6 +45,7 @@ const CustomerDetail: React.FC<any> = (props: any) => {
                   { label: 'Address', value: `${customer?.address}, ${customer?.city}, ${customer?.country}` },
                   { label: 'Postal Code', value: customer?.postalCode },
                   { label: 'Fax', value: customer?.fax },
+                  { label: 'Company Name', value: customer?.companyName },
                 ]}
               />
             </div>

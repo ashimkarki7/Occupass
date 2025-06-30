@@ -170,7 +170,7 @@ export const Header = () => {
           >
             <input
               className={HeaderStyles.search_input}
-              placeholder="Search..."
+              placeholder={`Search ${location.pathname?.replace('/','')?.toLowerCase()}`}
               id={'search_input'}
               anchor-name="search-input"
             />
