@@ -2,6 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import DynamicTable from '@/components/Table/Table.tsx';
 import { customerColumns } from '@/enums/tableEnums.ts';
 import type { CustomerData, PaginationParams } from '@/components/Table/types';
+import styles from '@pages/CustomerDetails/component/CustomerDetail.module.scss';
 
 interface Props {
   getCustomers: (params: { skip?: number; take?: number,orderBy?:string|undefined,  orderByDesc?:string|undefined  }) => void;
@@ -42,6 +43,7 @@ const HomepageComponent: React.FC<Props> = (props) => {
         <div style={{
           margin: '2rem 1.5rem 0'
         }}>
+          <h1 className={styles.customerName}>Customers</h1>
           <DynamicTable
             sorting={true}
             hasPagination={true}

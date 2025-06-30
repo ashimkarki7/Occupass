@@ -1,6 +1,9 @@
 # Add .env file  .env.local, .env, .env.production
 VITE_APP_URL='https://uitestapi.occupass.com'
 
+# node version
+v20.9.0
+
 
 # React + TypeScript + Vite
 

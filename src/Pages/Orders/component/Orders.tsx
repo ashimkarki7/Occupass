@@ -2,6 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import DynamicTable from '@/components/Table/Table.tsx';
 import {  orderColumns } from '@/enums/tableEnums.ts';
 import type { CustomerData, PaginationParams } from '@/components/Table/types.ts';
+import styles from '@pages/CustomerDetails/component/CustomerDetail.module.scss';
 
 
 interface Props {
@@ -46,6 +47,7 @@ const OrderComponent: React.FC<Props> = (props) => {
       <div style={{
         margin: '2rem 1.5rem 0'
       }}>
+        <h1 className={styles.customerName}>Orders</h1>
       <DynamicTable
         sorting={true}
         hasPagination={true}
