@@ -6,13 +6,12 @@ import {
   LogoSvg,
   HeartSvg,
   ViewBoxSvg,
-  SearchIconSvg,
   DropDownSvg,
 } from '@assets/svg';
-import Button from '@/components/Button/Button.tsx';
 import { mainRoutesList } from '@routes/RouteListItems.tsx';
 import type { RouteItem } from '@routes/routes.ts';
 import DropdownComponent from '@/components/Dropdown/Dropdown.tsx';
+import HeaderSearch from '@/components/Search/search.tsx';
 import type { IObjectLiteral } from '@common/types.ts';
 
 
@@ -168,22 +167,10 @@ export const Header = () => {
               marginRight: '1em',
             }}
           >
-            <input
-              className={HeaderStyles.search_input}
-              placeholder={`Search ${location.pathname?.replace('/','')?.toLowerCase()}`}
-              id={'search_input'}
-              anchor-name="search-input"
-            />
-            <Button
-              ariaLabel="Search"
-              anchor-target="search-input"
-              hasIconOnly={true}
-              title={<SearchIconSvg />}
-              onClickHandler={() => {
-                console.log('search clicked');
-              }}
-              className={HeaderStyles.btnSearch}
-            />
+            {['/','/orders']?.includes(location.pathname) && (
+              <HeaderSearch location={location} />
+            )}
+
           </div>
 
           <div

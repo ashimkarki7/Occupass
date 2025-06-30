@@ -34,7 +34,7 @@ export const getCustomers = createAsyncThunk(
         }
       }
     });
-    return v2Fetch(`query/customers?${queryParams}&Include=total`)
+    return v2Fetch(`api/QueryCustomers?${queryParams}&Include=total`)
       .then((response: any) => {
         if (response.status === 200) {
           return Promise.resolve(response?.data);
