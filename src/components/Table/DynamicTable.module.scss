@@ -89,6 +89,14 @@
   align-items: center;
   gap: 1rem;
 
+  .paginationButton{
+    display: flex;
+    gap:10px;
+    @media (max-width: 480px) {
+    display: none;
+    }
+  }
+
   button {
     background-color: #a47d4f;
     color: white;

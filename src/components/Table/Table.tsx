@@ -122,20 +122,23 @@ const DynamicTable: React.FC<DynamicTableProps> = ({sorting, hasPagination,total
       {hasPagination && (
         <div className={styles.pagination}>
           <button onClick={handlePrev} disabled={pagination.skip === 0}>Prev</button>
-          {Array.from({ length: Math.ceil(total / pagination.take) }).map((_, index) => {
-            const page = index + 1;
-            const isActive = pagination.skip === index * pagination.take;
+          <div className={styles?.paginationButton}>
+            {Array.from({ length: Math.ceil(total / pagination.take) }).map((_, index) => {
+              const page = index + 1;
+              const isActive = pagination.skip === index * pagination.take;
 
-            return (
-              <button
-                key={page}
-                onClick={() => onPaginationChange({ skip: index * pagination.take, take: pagination.take })}
-                className={isActive ? styles.activePage : ''}
-              >
-                {page}
-              </button>
-            );
-          })?.slice(0,10)}
+              return (
+                <button
+                  key={page}
+                  onClick={() => onPaginationChange({ skip: index * pagination.take, take: pagination.take })}
+                  className={isActive ? styles.activePage : ''}
+                >
+                  {page}
+                </button>
+              );
+            })?.slice(0,10)}
+          </div>
+
 
           <span>Page {Math.floor(pagination.skip / pagination.take) + 1}
             {total ? ` of ${Math.ceil(total / pagination.take)}` : ''}
